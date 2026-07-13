@@ -1,13 +1,13 @@
 "use client"
 
-import { useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { Alert, AlertDescription } from "@/components/ui/alert"
 import { CFResultCard } from "@/components/cf-result-card"
 import { DateInput, parseDateValue } from "@/components/date-input"
-import type { CFSuccess, CFFailure } from "@/lib/cf-types"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import type { CFFailure, CFSuccess } from "@/lib/cf-types"
+import { useState } from "react"
 
 interface FieldError {
   field?: string
@@ -148,17 +148,18 @@ export function SingleTab() {
         {fieldError("date")}
 
         <div>
-          <Label htmlFor="birthplace">Comune di nascita</Label>
+          <Label htmlFor="birthplace">Comune di nascita  <span className="text-xs text-muted-foreground">(o paese nel caso di persona straniera)</span></Label>
           <Input
             id="birthplace"
             placeholder="Es. ROMA o codice catastale H501"
             value={fields.birthplace}
             onChange={set("birthplace")}
           />
+         
           {fieldError("birthplace")}
         </div>
         <div>
-          <Label htmlFor="birthplaceProvincia">Provincia (opzionale, disambigua)</Label>
+          <Label htmlFor="birthplaceProvincia">Provincia <span className="text-xs text-muted-foreground">(opzionale, disambigua)</span></Label>
           <Input
             id="birthplaceProvincia"
             placeholder="Es. RM"

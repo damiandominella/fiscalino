@@ -1,9 +1,7 @@
 "use client"
 
-import { useState, useRef } from "react"
-import Papa from "papaparse"
-import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -12,7 +10,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import type { CFInput, CFSuccess, BulkResult } from "@/lib/cf-types"
+import type { BulkResult, CFInput, CFSuccess } from "@/lib/cf-types"
+import Papa from "papaparse"
+import { useRef, useState } from "react"
 
 // Auto-detect common column names → our field names
 // "_date" means the column holds a full date string we'll parse ourselves
@@ -428,12 +428,12 @@ export function CSVTab() {
                 <TableRow>
                   <TableHead className="w-8 text-center">#</TableHead>
                   <TableHead>CF</TableHead>
-                  <TableHead>Stato</TableHead>
-                  <TableHead>Note</TableHead>
+                 
                   {headers.slice(0, 4).map((h) => (
                     <TableHead key={h} className="max-w-[120px]">{h}</TableHead>
                   ))}
-                  <TableHead className="w-8">Random</TableHead>
+                   <TableHead>Stato</TableHead>
+                  <TableHead>Note</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -441,16 +441,14 @@ export function CSVTab() {
                   <TableRow key={i} className={r.status === "errore" ? "bg-destructive/5" : undefined}>
                     <TableCell className="text-center text-muted-foreground text-xs">{i + 1}</TableCell>
                     <TableCell className="font-mono font-medium tracking-wider text-sm">{r.cf || "—"}</TableCell>
-                    <TableCell>
-                      <span className={`px-2 py-0.5 rounded text-xs font-medium ${statusColor[r.status]}`}>
-                        {r.status}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-xs text-muted-foreground max-w-[200px] truncate">{r.note}</TableCell>
+            
                     {headers.slice(0, 4).map((h) => (
                       <TableCell key={h} className="text-xs max-w-[120px] truncate">{r.original[h] ?? ""}</TableCell>
                     ))}
                     <TableCell className="text-center">
+                       <span className={`px-2 py-0.5 rounded text-xs font-medium ${statusColor[r.status]}`}>
+                        {r.status}
+                      </span>
                       {r.status === "errore" && (
                         <input
                           type="checkbox"
@@ -460,7 +458,9 @@ export function CSVTab() {
                           title="Riempi questa riga con un CF random valido"
                         />
                       )}
+                     
                     </TableCell>
+                    <TableCell className="text-xs text-muted-foreground max-w-[200px] truncate">{r.note}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

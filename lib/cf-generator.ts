@@ -1,6 +1,38 @@
 import CodiceFiscale from "codice-fiscale-js"
 import type { CFInput, CFResult, CFData, CFFieldSources, Gender } from "./cf-types"
 
+// Province code → capoluogo comune name.
+// Most province names already match the capoluogo; overrides handle compound names.
+const PROVINCE_CAPOLUOGO: Record<string, string> = {
+  AG: "AGRIGENTO", AL: "ALESSANDRIA", AN: "ANCONA", AO: "AOSTA",
+  AP: "ASCOLI PICENO", AQ: "L'AQUILA", AR: "AREZZO", AT: "ASTI",
+  AV: "AVELLINO", BA: "BARI", BG: "BERGAMO", BI: "BIELLA",
+  BL: "BELLUNO", BN: "BENEVENTO", BO: "BOLOGNA", BR: "BRINDISI",
+  BS: "BRESCIA", BT: "BARLETTA", BZ: "BOLZANO", CA: "CAGLIARI",
+  CB: "CAMPOBASSO", CE: "CASERTA", CH: "CHIETI", CL: "CALTANISSETTA",
+  CN: "CUNEO", CO: "COMO", CR: "CREMONA", CS: "COSENZA",
+  CT: "CATANIA", CZ: "CATANZARO", EN: "ENNA", FC: "FORLI'",
+  FE: "FERRARA", FG: "FOGGIA", FI: "FIRENZE", FM: "FERMO",
+  FR: "FROSINONE", GE: "GENOVA", GO: "GORIZIA", GR: "GROSSETO",
+  IM: "IMPERIA", IS: "ISERNIA", KR: "CROTONE", LC: "LECCO",
+  LE: "LECCE", LI: "LIVORNO", LO: "LODI", LT: "LATINA",
+  LU: "LUCCA", MB: "MONZA", MC: "MACERATA", ME: "MESSINA",
+  MI: "MILANO", MN: "MANTOVA", MO: "MODENA", MS: "MASSA",
+  MT: "MATERA", NA: "NAPOLI", NO: "NOVARA", NU: "NUORO",
+  OR: "ORISTANO", PA: "PALERMO", PC: "PIACENZA", PD: "PADOVA",
+  PE: "PESCARA", PG: "PERUGIA", PI: "PISA", PN: "PORDENONE",
+  PO: "PRATO", PR: "PARMA", PT: "PISTOIA", PU: "PESARO",
+  PV: "PAVIA", PZ: "POTENZA", RA: "RAVENNA", RC: "REGGIO CALABRIA",
+  RE: "REGGIO EMILIA", RG: "RAGUSA", RI: "RIETI", RM: "ROMA",
+  RN: "RIMINI", RO: "ROVIGO", SA: "SALERNO", SI: "SIENA",
+  SO: "SONDRIO", SP: "LA SPEZIA", SR: "SIRACUSA", SS: "SASSARI",
+  SU: "CARBONIA", SV: "SAVONA", TA: "TARANTO", TE: "TERAMO",
+  TN: "TRENTO", TO: "TORINO", TP: "TRAPANI", TR: "TERNI",
+  TS: "TRIESTE", TV: "TREVISO", UD: "UDINE", VA: "VARESE",
+  VB: "VERBANIA", VC: "VERCELLI", VE: "VENEZIA", VI: "VICENZA",
+  VR: "VERONA", VT: "VITERBO", VV: "VIBO VALENTIA",
+}
+
 // Curated list of valid Italian comuni for random generation
 const COMUNI_SAMPLE = [
   { nome: "ROMA", prov: "RM" },
@@ -95,6 +127,13 @@ export function generateCF(input: CFInput): CFResult {
   if (input.birthplace) {
     birthplace = input.birthplace.toUpperCase()
     birthplaceProvincia = input.birthplaceProvincia?.toUpperCase() ?? ""
+
+    // Resolve 2-letter province codes (e.g. "RN" → "RIMINI") to capoluogo
+    if (birthplace.length === 2 && /^[A-Z]{2}$/.test(birthplace) && PROVINCE_CAPOLUOGO[birthplace]) {
+      birthplaceProvincia = birthplace
+      birthplace = PROVINCE_CAPOLUOGO[birthplace]
+    }
+
     sources.birthplaceProvincia = input.birthplaceProvincia ? "user" : "random"
   } else {
     const comuneRandom = randomFrom(COMUNI_SAMPLE)
