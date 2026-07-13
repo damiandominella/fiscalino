@@ -1,5 +1,5 @@
 import CodiceFiscale from "codice-fiscale-js"
-import type { CFInput, CFResult, CFData, CFFieldSources, Gender } from "./cf-types"
+import type { CFData, CFFieldSources, CFInput, CFResult, Gender } from "./cf-types"
 
 // Province code → capoluogo comune name.
 // Most province names already match the capoluogo; overrides handle compound names.
@@ -54,7 +54,6 @@ const COMUNI_SAMPLE = [
   { nome: "BRESCIA", prov: "BS" },
   { nome: "PRATO", prov: "PO" },
   { nome: "MODENA", prov: "MO" },
-  { nome: "REGGIO CALABRIA", prov: "RC" },
   { nome: "REGGIO EMILIA", prov: "RE" },
   { nome: "PERUGIA", prov: "PG" },
   { nome: "LIVORNO", prov: "LI" },

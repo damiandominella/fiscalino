@@ -2,6 +2,7 @@ import { BulkTab } from "@/components/bulk-tab"
 import { CSVTab } from "@/components/csv-tab"
 import { SingleTab } from "@/components/single-tab"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Link from "next/link"
 
 export default function Page() {
   return (
@@ -10,8 +11,12 @@ export default function Page() {
         <div className="max-w-5xl mx-auto px-4 py-5 flex items-end gap-3">
           <div>
             <h1 className="text-xl font-semibold tracking-tight">fiscalino</h1>
-            <p className="text-xs text-muted-foreground uppercase tracking-widest mb-0.5">Strumento di calcolo per il codice fiscale italiano</p>
           </div>
+          <nav className="ml-auto flex gap-4 text-sm font-medium mb-0.5">
+            <Link href="/" className="text-foreground">generator</Link>
+            <Link href="/docs" className="text-muted-foreground hover:text-foreground transition-colors">api</Link>
+            {/* <Link href="/agents" className="text-muted-foreground hover:text-foreground transition-colors">agents</Link> */}
+          </nav>
         </div>
       </header>
 
