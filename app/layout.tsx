@@ -1,13 +1,13 @@
 import { Analytics } from '@vercel/analytics/next'
-import { IBM_Plex_Mono, Inter } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
+import { IBM_Plex_Mono, Inter } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 const ibmPlexMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500', '600'] })
 
 export const metadata: Metadata = {
-  title: 'CF Generator — Codice Fiscale Italiano',
+  title: 'fiscalino | generatoro di codici fiscali italiani',
   description: 'Genera codici fiscali italiani singoli o in blocco, oppure arricchisci un CSV con i codici fiscali calcolati.',
 }
 

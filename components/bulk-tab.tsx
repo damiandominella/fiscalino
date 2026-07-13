@@ -1,13 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { DateInput, parseDateValue } from "@/components/date-input"
+import { ResultsTable } from "@/components/results-table"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { ResultsTable } from "@/components/results-table"
-import { DateInput, parseDateValue } from "@/components/date-input"
 import type { BulkResult } from "@/lib/cf-types"
+import { useState } from "react"
 
 export function BulkTab() {
   const [count, setCount] = useState("10")
@@ -70,7 +70,7 @@ export function BulkTab() {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div>
-          <Label htmlFor="count">Quanti CF generare</Label>
+          <Label htmlFor="count">Quanti codici fiscali generare</Label>
           <Input
             id="count"
             type="number"
